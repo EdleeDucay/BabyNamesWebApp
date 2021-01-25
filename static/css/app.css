@@ -1,0 +1,126 @@
+:root {
+    --font_color: black;    
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    
+
+}
+.container {
+    min-height: 100vh;
+}
+.user-input {
+    display: none;
+}
+
+.jumbotron {
+    padding-top: 15px;
+    padding-bottom: 25px;
+    background-color:rgb(10, 10, 10);
+    color: aliceblue;
+}
+
+.form-group {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.form-group input {
+    margin-top: 10px;
+}
+
+.form-control {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+.btn {
+    margin-top: 15px;
+    background-color: brown;
+    color: white;
+    width: 25%;
+    -webkit-transition: .2s ease-in-out;
+    -moz-transition: .2s ease-in-out;
+        transition: .2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: rgb(128, 33, 33);
+}
+
+.btn:active {
+    background-color: rgb(83, 22, 22);
+}
+
+.gender-input {
+    display: none;
+}
+
+.year-input {
+    display: none;
+}
+
+.name-input {
+    display: none;
+}
+
+.name-input-wc {
+    display: none;
+}
+
+.my-web-link {
+    font-weight: bold;
+    text-decoration: none;
+    color: brown;
+    -webkit-transition: .2s ease-in-out;
+    -moz-transition: .2s ease-in-out;
+        transition: .2s ease-in-out;
+ 
+}
+.my-web-link:hover {
+    color: rgb(102, 27, 27);
+    
+}
+
+.table th {
+    background-color: rgb(223, 223, 223) !important;
+}
+
+.longestOutput {
+    text-align: center;
+}
+
+.uniqueGirls {
+    margin: auto;
+    text-decoration: none;
+    font-weight: bold;
+    color: brown;
+    -webkit-transition: .2s ease-in-out;
+    -moz-transition: .2s ease-in-out;
+        transition: .2s ease-in-out;
+}
+
+.uniqueGirls:hover {
+    color: rgb(102, 27, 27);
+
+}
+
+.list-group-item {
+    margin: auto;
+    border: none;
+
+}
+
+footer {
+    text-align: center;
+    padding-bottom: 2.5rem;
+    bottom: 0;
+    font-size: 16px;
+    padding: 75px;
+    background-color: rgb(10, 10, 10) !important;
+    color: rgb(180, 180, 180);
+    background-color: var(--header_back);
+}

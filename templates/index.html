@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoert" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="favicon.ico"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <title>Baby Names Demo</title>
+
+</head>
+ 
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>Welcome to the Baby Names Demo!</h1>
+        <p>This web-app uses government documented names of children born in Alberta between the years 1980 to 2017. <br>
+            Select an action below and begin your search! <br>
+            If you have not already, visit my <a class="my-web-link" href="https://edlee.tech">website</a> to learn more about me.
+        </p>
+    <img src="https://media.giphy.com/media/2fXvNjhnat6yk/giphy.gif" alt="Baby image"/>
+
+    </div>
+
+    <div class="container">
+    <form method="post" class="text-center">
+        <div class="form-group">
+            <h3>Select an action</h3>
+            <select id="action" name="action" onchange="select_action(this.id, this.value)">
+                <option value="">Select action</option>
+                <option value="1">Print top ten lists</option>
+                <option value="2">Search for a name</option>
+                <option value="3">Names that appear only once in a year</option>
+                <option value="4">Longest names between 1980 - 2017</option>
+                <option value="5">Search for names with specific letters</option>
+                <!-- <option value="6">Graphically display the trend of a name</option> -->
+            </select>
+        
+
+            <div class="user-input" >
+                <div class="gender-input">
+                    <input type="radio" id="male" name="gender" value="b">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="g">
+                    <label for="female">Female</label><br>
+                </div>
+                <input type="text" class="form-control year-input" id="year" name="year" placeholder="Enter a year (1980 to 2017)"/>
+                <input type="text" class="form-control name-input" id="search" name="search" placeholder="Enter a name"/>
+                <input type="text" class="form-control name-input-wc" id="search-wc" name="search-wc" placeholder="Enter a name using '*' to indicate missing letters (ex. *lee)"/>
+                <input type="submit" class="btn btn-default submit-btn" value="Search"/><br>
+            </div>
+        </div>
+    </form>
+    {% if emptyError %}
+    <p class="text-center emptyError">{{emptyError}}</p>
+    {% endif %}
+    
+    <!-- Top Ten Table -->
+    {% if (action == 1) %}
+    <h3>Top ten names in year {{topTenYear}}</h3>
+    <table class="table topTen">
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Frequency</th>
+        </tr>
+        {% for name in topTen %}
+        <tr>
+            <td>{{name.rank}}</td>
+            <td>{{name.name}}</td>
+            <td>{{name.frequency}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- Name Search Table -->
+    {% if (action == 2 and nameData) %}
+    <h3>Search results for {{nameInput}}</h3>
+    <table class="table nameSearch">
+        <tr>
+            <th>Year</th>
+            <th>Boys</th>
+            <th>Girls</th>
+        </tr>
+        {% for name in nameData %}
+        <tr>
+            <td>{{name.year}}</td>
+            <td>{{name.freq_boy}}</td>
+            <td>{{name.freq_girl}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    {% if (action == 2 and not nameData) %}
+    <p class="text-center">No babies born in Alberta between 1980 to 2017 with the name '{{nameInput}}'</p>
+    {% endif %}
+
+    <!-- Unique Names Table -->
+    {% if (action == 3) %}
+    <div class="text-center"><a href="#uniqueGirls" class="uniqueGirls">Jump to unique names - Girls</a></div>
+    <div class="uniqueTable text-center">
+        <h1>Unique names - Boys</h1>
+        <ul class="vertList list-inline mx-auto justify-content-center">
+        {% for batch in boysData | batch(4) %}
+            <ul class="horiList list-group list-group-horizontal list-inline mx-auto justify-content-center">
+            {% for name in batch %}
+                <li class="list-group-item">{{name}}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="uniqueTable text-center" id="uniqueGirls">
+        <h1>Unique names - Girls</h1>
+        <ul class="vertList list-inline mx-auto justify-content-center">
+        {% for batch in girlsData | batch(4) %}
+            <ul class="horiList list-group list-group-horizontal list-inline mx-auto justify-content-center">
+            {% for name in batch %}
+                <li class="list-group-item">{{name}}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul>
+    </div>
+
+    {% endif %}
+
+    <!-- Longest names between 1980 and 2017 -->
+    {% if (action == 4) %}
+    <div class="longestOutput">
+        <div class="">The longest name given to a baby girl between 1980 and 2017 was {{longestData[0][0]}} in {{longestData[0][1]}}</div>
+        <div>The longest non-hyphenated name given to a baby girl between 1980 and 2017 was {{longestData[1][0]}} in {{longestData[1][1]}}</div>
+        <div>The longest name given to a baby boy between 1980 and 2017 was {{longestData[2][0]}} in {{longestData[2][1]}}</div>
+        <div>The longest non-hyphenated name given to a baby girl between 1980 and 2017 was {{longestData[3][0]}} in {{longestData[3][1]}}</div>
+    </div>
+    {% endif %}
+
+    <!-- Wildcard search -->
+    {% if (action == 5) %}
+        {% if (not wildcardData) %}
+        <div class="text-center">No matching names were found</div>
+        {% endif %}
+        {% for name in wildcardData %}
+        <table class="table wildCard">           
+            <tr>
+                <th>{{name[0]}}</th>
+                <th>Boys</th>
+                <th>Girls</th>
+            </tr>
+            {% for wildName in name[1] %}
+            <tr>
+                <td>{{wildName.year}}</td>
+                <td>{{wildName.freq_boys}}</td>
+                <td>{{wildName.freq_girls}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+
+<footer>
+    &copy; Edlee Ducay 2021
+</footer>
+<script type="text/javascript" src="../js/select.js"></script>
+
+</html>
