@@ -1,3 +1,3 @@
 # BabyNamesWebApp
-A web app built flask to demo the original [BabyNames](https://github.com/EdleeDucay/BabyNames) project.
-
+A modified version of the original [BabyNames](https://github.com/EdleeDucay/BabyNames) project.
+Built with Flask and deployed on [heroku](https://www.heroku.com/).
